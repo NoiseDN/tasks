@@ -20,6 +20,10 @@ public interface T {
     }
   }
 
+  default int random(int bound) {
+    return ThreadLocalRandom.current().nextInt(bound);
+  }
+
   default String randomString() {
     return String.valueOf(ThreadLocalRandom.current().nextInt());
   }

@@ -2,6 +2,7 @@ package concurrency;
 
 import static java.lang.String.format;
 
+import concurrency.pools.SlowJob;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -11,8 +12,18 @@ import java.util.stream.Stream;
 
 public class Threading {
 
+  private static long start;
+
   protected static void start(Job job) {
     new Thread(job).start();
+  }
+
+  protected static void logStart() {
+    start = System.currentTimeMillis();
+  }
+
+  protected static long timing() {
+    return System.currentTimeMillis() - start;
   }
 
   protected static void sleep(int millis) {
@@ -48,9 +59,13 @@ public class Threading {
   }
 
   protected static List<Job> generateJobs(int count) {
+    return generateJobs(count, false);
+  }
+
+  protected static List<Job> generateJobs(int count, boolean slow) {
     return Stream.iterate(0, i -> i = i + 1)
         .limit(count)
-        .map(i -> new Job("job-" + i))
+        .map(i -> slow ? new SlowJob("slow-" + i) : new Job("job-" + i))
         .collect(Collectors.toList());
   }
 }

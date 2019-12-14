@@ -1,5 +1,8 @@
 package concurrency.pools;
 
+import static java.lang.String.format;
+import static org.awaitility.Awaitility.await;
+
 import concurrency.Job;
 import concurrency.Threading;
 import java.util.List;
@@ -10,19 +13,22 @@ import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 public class ScheduledPoolExample extends Threading {
+
+  private static final int JOBS = 100;
+
   public static void main(String[] args) {
     ScheduledExecutorService executor = scheduledPool(10);
 
-    List<Job> jobs = generateJobs(100);
+    List<Job> jobs = generateJobs(JOBS);
 
-    println("Scheduling jobs to run in 1 SECOND...");
+    println(format("Scheduling %s jobs to run in 1 SECOND...", JOBS));
 
     List<Future> futures = jobs.stream()
         .map(job -> executor.schedule(job, 1, TimeUnit.SECONDS))
         .collect(Collectors.toList());
 
-    sleep(2000);
-    System.out.println("All jobs are " + (futures.stream().allMatch(Future::isDone) ? "done" : "not done"));
+    await().atMost(2, TimeUnit.SECONDS)
+        .until(() -> futures.stream().allMatch(Future::isDone));
 
     executor.shutdown();
   }
