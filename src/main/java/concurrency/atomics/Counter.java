@@ -2,7 +2,8 @@ package concurrency.atomics;
 
 public class Counter {
 
-  private int value = 0;
+  // note volatile does not provide atomicity
+  private volatile int value = 0;
 
   public void increment() {
     value++;
