@@ -1,13 +1,11 @@
-package stellar;
+package algorithms;
 
 import static java.util.stream.Collectors.toList;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Stream;
 
 /**
  * Write a Java program to remove duplicate elements from an array.

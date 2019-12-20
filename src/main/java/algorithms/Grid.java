@@ -1,4 +1,4 @@
-package stellar;
+package algorithms;
 
 /**
  * Write a Java program to print the following grid. Go to the editor

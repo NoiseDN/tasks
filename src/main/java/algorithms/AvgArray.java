@@ -1,4 +1,4 @@
-package stellar;
+package algorithms;
 
 import java.util.Arrays;
 

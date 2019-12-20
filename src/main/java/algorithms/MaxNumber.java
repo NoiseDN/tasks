@@ -1,4 +1,4 @@
-package stellar;
+package algorithms;
 
 public class MaxNumber {
     private String[] digits;
